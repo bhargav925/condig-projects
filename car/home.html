@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeonDrive - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00ffff',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body class="min-h-screen">
+    <!-- Header & Navigation -->
+    <header class="bg-black bg-opacity-90 border-b border-gray-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="font-['Pacifico'] text-2xl text-primary neon-text">NeonDrive</a>
+                    <nav class="hidden md:flex ml-10 space-x-8">
+                        <a href="home.html" data-page="home" class="orbitron text-primary neon-text transition-all duration-300">Home</a>
+                        <a href="gallery.html" data-page="gallery" class="orbitron text-white hover:text-primary hover:neon-text transition-all duration-300">Gallery</a>
+                        <a href="shop.html" data-page="shop" class="orbitron text-white hover:text-primary hover:neon-text transition-all duration-300">Shop</a>
+                        <a href="#about" data-page="about" class="orbitron text-white hover:text-primary hover:neon-text transition-all duration-300">About</a>
+                        <a href="#contact" data-page="contact" class="orbitron text-white hover:text-primary hover:neon-text transition-all duration-300">Contact</a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <div class="flex items-center border border-gray-700 rounded-full overflow-hidden pulsing">
+                            <input type="text" placeholder="Search products..." class="bg-transparent border-none pl-3 pr-10 py-1 text-sm focus:outline-none w-40 md:w-60" />
+                            <button class="absolute right-0 top-0 h-full px-3 flex items-center justify-center">
+                                <div class="w-5 h-5 flex items-center justify-center">
+                                    <i class="ri-search-line text-primary"></i>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 cursor-pointer">
+                        <i class="ri-user-line text-primary"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-home">
+        <div class="hero-content">
+            <h1 class="neon-text-animated">Transform Your Ride</h1>
+            <p class="cyber-text">Premium Neon Underglow Lighting Systems</p>
+            <div class="hero-buttons">
+                <a href="shop.html" class="cyber-button">Shop Now <i class="fas fa-arrow-right"></i></a>
+                <a href="#featured" class="cyber-button-outline">View Featured <i class="fas fa-star"></i></a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1633509817627-5a29634475af" alt="Neon Car" class="cyber-image">
+        </div>
+    </section>
+
+    <section class="features cyber-section">
+        <h2 class="section-title neon-text">Featured Products</h2>
+        <div class="feature-grid">
+            <div class="cyber-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1633509817627-5a29634475af" alt="NeonDrive Pro Kit">
+                </div>
+                <div class="card-content">
+                    <h3 class="cyber-title">NeonDrive Pro Kit</h3>
+                    <p class="cyber-price">$249.99</p>
+                    <p class="cyber-description">Complete underglow kit with Bluetooth controller</p>
+                    <a href="shop.html" class="cyber-button-sm">Learn More</a>
+                </div>
+            </div>
+            <div class="cyber-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1614200187524-dc4b892acf16" alt="Flux Spectrum Kit">
+                </div>
+                <div class="card-content">
+                    <h3 class="cyber-title">Flux Spectrum Kit</h3>
+                    <p class="cyber-price">$199.99</p>
+                    <p class="cyber-description">Multi-color dynamic lighting system</p>
+                    <a href="shop.html" class="cyber-button-sm">Learn More</a>
+                </div>
+            </div>
+            <div class="cyber-card">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1619767886558-efdc259b6e09" alt="Azure Wave Controller">
+                </div>
+                <div class="card-content">
+                    <h3 class="cyber-title">Azure Wave Controller</h3>
+                    <p class="cyber-price">$99.99</p>
+                    <p class="cyber-description">Advanced controller with 16 preset patterns</p>
+                    <a href="shop.html" class="cyber-button-sm">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest-arrivals">
+        <h2>Latest Arrivals</h2>
+        <div class="car-grid">
+            <div class="car-item">
+                <div class="car-preview">
+                    <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8" alt="Mercedes AMG GT">
+                </div>
+                <h3>Mercedes-AMG GT</h3>
+                <p class="price">$185,000</p>
+                <a href="shop.html" class="btn">Learn More</a>
+            </div>
+            <div class="car-item">
+                <div class="car-preview">
+                    <img src="https://images.unsplash.com/photo-1614200187524-dc4b892acf16" alt="Porsche 911">
+                </div>
+                <h3>Porsche 911 GT3</h3>
+                <p class="price">$175,000</p>
+                <a href="shop.html" class="btn">Learn More</a>
+            </div>
+            <div class="car-item">
+                <div class="car-preview">
+                    <img src="https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5" alt="Range Rover">
+                </div>
+                <h3>Range Rover SV</h3>
+                <p class="price">$165,000</p>
+                <a href="shop.html" class="btn">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cyber-features">
+        <h2 class="section-title neon-text">Why Choose NeonDrive?</h2>
+        <div class="cyber-grid">
+            <div class="cyber-feature">
+                <i class="fas fa-microchip neon-icon"></i>
+                <h4>Advanced Tech</h4>
+                <p>State-of-the-art LED technology</p>
+            </div>
+            <div class="cyber-feature">
+                <i class="fas fa-mobile-alt neon-icon"></i>
+                <h4>Smart Control</h4>
+                <p>Bluetooth & smartphone integration</p>
+            </div>
+            <div class="cyber-feature">
+                <i class="fas fa-bolt neon-icon"></i>
+                <h4>Easy Install</h4>
+                <p>Plug-and-play installation</p>
+            </div>
+            <div class="cyber-feature">
+                <i class="fas fa-shield-alt neon-icon"></i>
+                <h4>Warranty</h4>
+                <p>2-year warranty included</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cyber-newsletter">
+        <div class="newsletter-content">
+            <h2 class="neon-text">Join the Network</h2>
+            <p class="cyber-text">Subscribe for exclusive deals and early access to new products</p>
+            <form class="cyber-form">
+                <input type="email" placeholder="Enter your email" class="cyber-input">
+                <button type="submit" class="cyber-button">Subscribe <i class="fas fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <a href="#" class="font-['Pacifico'] text-2xl text-primary neon-text">NeonDrive</a>
+                </div>
+                <p class="footer-description">Premium neon underglow solutions for automotive enthusiasts. Transform your ride with our cutting-edge 3D customization platform</p>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="ri-facebook-fill"></i></a>
+                    <a href="#" class="social-icon"><i class="ri-instagram-fill"></i></a>
+                    <a href="#" class="social-icon"><i class="ri-twitter-fill"></i></a>
+                    <a href="#" class="social-icon"><i class="ri-youtube-fill"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Home</a>
+                    <a href="#" class="footer-link">Shop</a>
+                    <a href="#" class="footer-link">Gallery</a>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Contact</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Support</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">FAQ</a>
+                    <a href="#" class="footer-link">Installation Guides</a>
+                    <a href="#" class="footer-link">Warranty Information</a>
+                    <a href="#" class="footer-link">Shipping & Returns</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Subscribe</h3>
+                <p class="footer-description">Get the latest news and exclusive offers.</p>
+                <div class="subscribe-form">
+                    <input type="email" placeholder="Your email" class="subscribe-input">
+                    <button class="subscribe-button">Subscribe</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-container">
+                <div class="footer-bottom-links">
+                    <a href="#" class="footer-bottom-link">Terms of Service</a>
+                    <a href="#" class="footer-bottom-link">Privacy Policy</a>
+                    <a href="#" class="footer-bottom-link">Cookie Policy</a>
+                </div>
+                <div class="payment-methods">
+                    <div class="payment-icon"><i class="ri-visa-line"></i></div>
+                    <div class="payment-icon"><i class="ri-mastercard-line"></i></div>
+                    <div class="payment-icon"><i class="ri-paypal-line"></i></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

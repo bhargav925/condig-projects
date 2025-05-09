@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeonDrive - Gallery</title>
+  <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: "#00ffaa", secondary: "#ff00ff" },
+          borderRadius: {
+            none: "0px",
+            sm: "4px",
+            DEFAULT: "8px",
+            md: "12px",
+            lg: "16px",
+            xl: "20px",
+            "2xl": "24px",
+            "3xl": "32px",
+            full: "9999px",
+            button: "8px",
+          },
+        },
+      },
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet" />
+  <style>
+    :where([class^="ri-"])::before {
+      content: "\f3c2";
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .neon-text {
+      text-shadow: 0 0 5px #00ffaa, 0 0 10px #00ffaa, 0 0 15px #00ffaa;
+    }
+
+    .neon-text-pink {
+      text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff, 0 0 15px #ff00ff;
+    }
+
+    .neon-border {
+      box-shadow: 0 0 5px #00ffaa, 0 0 10px #00ffaa;
+    }
+
+    .neon-border-pink {
+      box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+    }
+
+    .neon-glow {
+      filter: drop-shadow(0 0 8px #00ffaa);
+    }
+
+    .neon-glow-pink {
+      filter: drop-shadow(0 0 8px #ff00ff);
+    }
+
+    .orbitron {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .pulsing {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 5px #00ffaa, 0 0 10px #00ffaa;
+      }
+
+      50% {
+        box-shadow: 0 0 15px #00ffaa, 0 0 20px #00ffaa;
+      }
+
+      100% {
+        box-shadow: 0 0 5px #00ffaa, 0 0 10px #00ffaa;
+      }
+    }
+
+    .pulsing-pink {
+      animation: pulse-pink 2s infinite;
+    }
+
+    @keyframes pulse-pink {
+      0% {
+        box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+      }
+
+      50% {
+        box-shadow: 0 0 15px #ff00ff, 0 0 20px #ff00ff;
+      }
+
+      100% {
+        box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+      }
+    }
+
+    .gallery-card:hover .card-overlay {
+      opacity: 1;
+    }
+
+    .gallery-card:hover .card-actions {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .gallery-card:hover .neon-indicator {
+      transform: scale(1.1);
+    }
+
+    .custom-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      min-width: 200px;
+      z-index: 10;
+      background-color: #111111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      margin-top: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .custom-dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    .custom-checkbox {
+      display: none;
+    }
+
+    .custom-checkbox-label {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #00ffaa;
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .custom-checkbox:checked+.custom-checkbox-label::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 12px;
+      height: 12px;
+      background-color: #00ffaa;
+      border-radius: 2px;
+      box-shadow: 0 0 5px #00ffaa;
+    }
+
+    .gallery-card .neon-indicator {
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-card .card-overlay {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-card .card-actions {
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #1a1a1a;
+      border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen">
+  <!-- Header & Navigation -->
+  <header class="bg-black bg-opacity-90 border-b border-gray-800 sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center">
+          <a href="#" class="font-['Pacifico'] text-2xl text-primary neon-text">logo</a>
+          <nav class="hidden md:flex ml-10 space-x-8">
+            <a href="home.html" data-page="home"
+              class="orbitron text-white hover:text-primary hover:neon-text transition-all duration-300">Home</a>
+            <a href="gallery.html" data-readdy="true" data-page="gallery"
+              class="orbitron text-primary neon-text transition-all duration-300">Gallery</a>
+            <a href="shop.html" data-readdy="true" data-page="shop"
+              class="orbitron text-white hover:text-primary hover:neon-text transition-all duration-300">Shop</a>
+            <a href="#" data-page="about"
+              class="orbitron text-white hover:text-primary hover:neon-text transition-all duration-300">About</a>
+            <a href="#" data-page="contact"
+              class="orbitron text-white hover:text-primary hover:neon-text transition-all duration-300">Contact</a>
+          </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+          <div class="relative">
+            <div class="flex items-center border border-gray-700 rounded-full overflow-hidden pulsing">
+              <input type="text" placeholder="Search models..."
+                class="bg-transparent border-none pl-3 pr-10 py-1 text-sm focus:outline-none w-40 md:w-60" />
+              <button class="absolute right-0 top-0 h-full px-3 flex items-center justify-center">
+                <div class="w-5 h-5 flex items-center justify-center">
+                  <i class="ri-search-line text-primary"></i>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div
+            class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 cursor-pointer">
+            <i class="ri-user-line text-primary"></i>
+          </div>
+          <div
+            class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700 cursor-pointer relative">
+            <i class="ri-shopping-cart-line text-primary"></i>
+            <span
+              class="absolute -top-1 -right-1 bg-secondary text-xs text-white w-4 h-4 flex items-center justify-center rounded-full neon-glow-pink">3</span>
+          </div>
+          <button class="md:hidden w-8 h-8 flex items-center justify-center">
+            <i class="ri-menu-line text-xl text-primary"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Main Content -->
+  <main class="container mx-auto px-4 py-8">
+    <!-- Gallery Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+      <div>
+        <h1 class="orbitron text-3xl md:text-4xl font-bold text-white mb-2">
+          Neon Underglow Gallery
+        </h1>
+        <p class="text-gray-400 max-w-2xl">
+          Browse our collection of custom car designs with stunning neon
+          underglow lighting. Find inspiration for your next ride
+          transformation.
+        </p>
+      </div>
+      <div class="mt-4 md:mt-0">
+        <button
+          class="neon-button bg-primary text-black px-6 py-2 rounded-button orbitron font-medium hover:bg-opacity-90 transition-colors flex items-center !rounded-button whitespace-nowrap">
+          <i class="ri-heart-line mr-2"></i> My Favorites
+        </button>
+      </div>
+    </div>
+    <!-- Filter Bar -->
+    <div class="bg-black bg-opacity-70 border border-gray-800 rounded-lg p-4 mb-8">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="flex flex-wrap gap-3">
+          <!-- Car Model Filter -->
+          <div class="custom-dropdown">
+            <button
+              class="bg-gray-900 border border-gray-700 text-white px-4 py-2 rounded flex items-center space-x-2 hover:border-primary transition-colors !rounded-button whitespace-nowrap">
+              <span>Car Model</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <div class="dropdown-content custom-scrollbar">
+              <div class="p-3 space-y-2">
+                <div class="flex items-center">
+                  <input type="checkbox" id="model1" class="custom-checkbox" />
+                  <label for="model1" class="custom-checkbox-label mr-2"></label>
+                  <label for="model1" class="cursor-pointer">Phantom GT</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="model2" class="custom-checkbox" />
+                  <label for="model2" class="custom-checkbox-label mr-2"></label>
+                  <label for="model2" class="cursor-pointer">Velocity X-9</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="model3" class="custom-checkbox" />
+                  <label for="model3" class="custom-checkbox-label mr-2"></label>
+                  <label for="model3" class="cursor-pointer">Stealth Racer Pro</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="model4" class="custom-checkbox" />
+                  <label for="model4" class="custom-checkbox-label mr-2"></label>
+                  <label for="model4" class="cursor-pointer">Quantum RS Turbo</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="model5" class="custom-checkbox" />
+                  <label for="model5" class="custom-checkbox-label mr-2"></label>
+                  <label for="model5" class="cursor-pointer">Eclipse Vortex</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="model6" class="custom-checkbox" />
+                  <label for="model6" class="custom-checkbox-label mr-2"></label>
+                  <label for="model6" class="cursor-pointer">Horizon GT-R</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Color Scheme Filter -->
+          <div class="custom-dropdown">
+            <button
+              class="bg-gray-900 border border-gray-700 text-white px-4 py-2 rounded flex items-center space-x-2 hover:border-primary transition-colors !rounded-button whitespace-nowrap">
+              <span>Color Scheme</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <div class="dropdown-content custom-scrollbar">
+              <div class="p-3 space-y-2">
+                <div class="flex items-center">
+                  <input type="checkbox" id="color1" class="custom-checkbox" />
+                  <label for="color1" class="custom-checkbox-label mr-2"></label>
+                  <div class="w-4 h-4 rounded-full mr-2" style="background: #00ffaa; box-shadow: 0 0 5px #00ffaa;">
+                  </div>
+                  <label for="color1" class="cursor-pointer">Cyber Green</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="color2" class="custom-checkbox" />
+                  <label for="color2" class="custom-checkbox-label mr-2"></label>
+                  <div class="w-4 h-4 rounded-full mr-2" style="background: #ff00ff; box-shadow: 0 0 5px #ff00ff;">
+                  </div>
+                  <label for="color2" class="cursor-pointer">Magenta Flux</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="color3" class="custom-checkbox" />
+                  <label for="color3" class="custom-checkbox-label mr-2"></label>
+                  <div class="w-4 h-4 rounded-full mr-2" style="background: #00ffff; box-shadow: 0 0 5px #00ffff;">
+                  </div>
+                  <label for="color3" class="cursor-pointer">Azure Blue</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="color4" class="custom-checkbox" />
+                  <label for="color4" class="custom-checkbox-label mr-2"></label>
+                  <div class="w-4 h-4 rounded-full mr-2" style="background: #ffff00; box-shadow: 0 0 5px #ffff00;">
+                  </div>
+                  <label for="color4" class="cursor-pointer">Electric Yellow</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="color5" class="custom-checkbox" />
+                  <label for="color5" class="custom-checkbox-label mr-2"></label>
+                  <div class="w-4 h-4 rounded-full mr-2" style="background: #ff3300; box-shadow: 0 0 5px #ff3300;">
+                  </div>
+                  <label for="color5" class="cursor-pointer">Lava Orange</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="color6" class="custom-checkbox" />
+                  <label for="color6" class="custom-checkbox-label mr-2"></label>
+                  <div class="w-4 h-4 rounded-full mr-2"
+                    style="background: linear-gradient(to right, #00ffaa, #00ffff); box-shadow: 0 0 5px #00ffaa;"></div>
+                  <label for="color6" class="cursor-pointer">Multi-Color</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Lighting Pattern Filter -->
+          <div class="custom-dropdown">
+            <button
+              class="bg-gray-900 border border-gray-700 text-white px-4 py-2 rounded flex items-center space-x-2 hover:border-primary transition-colors !rounded-button whitespace-nowrap">
+              <span>Lighting Pattern</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <div class="dropdown-content custom-scrollbar">
+              <div class="p-3 space-y-2">
+                <div class="flex items-center">
+                  <input type="checkbox" id="pattern1" class="custom-checkbox" />
+                  <label for="pattern1" class="custom-checkbox-label mr-2"></label>
+                  <label for="pattern1" class="cursor-pointer">Solid</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="pattern2" class="custom-checkbox" />
+                  <label for="pattern2" class="custom-checkbox-label mr-2"></label>
+                  <label for="pattern2" class="cursor-pointer">Pulse</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="pattern3" class="custom-checkbox" />
+                  <label for="pattern3" class="custom-checkbox-label mr-2"></label>
+                  <label for="pattern3" class="cursor-pointer">Wave</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="pattern4" class="custom-checkbox" />
+                  <label for="pattern4" class="custom-checkbox-label mr-2"></label>
+                  <label for="pattern4" class="cursor-pointer">Strobe</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="pattern5" class="custom-checkbox" />
+                  <label for="pattern5" class="custom-checkbox-label mr-2"></label>
+                  <label for="pattern5" class="cursor-pointer">Sound Reactive</label>
+                </div>
+                <div class="flex items-center">
+                  <input type="checkbox" id="pattern6" class="custom-checkbox" />
+                  <label for="pattern6" class="custom-checkbox-label mr-2"></label>
+                  <label for="pattern6" class="cursor-pointer">Chase</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3">
+          <span class="text-gray-400">Sort by:</span>
+          <div class="custom-dropdown">
+            <button
+              class="bg-gray-900 border border-gray-700 text-white px-4 py-2 rounded flex items-center space-x-2 hover:border-primary transition-colors !rounded-button whitespace-nowrap">
+              <span>Most Popular</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </button>
+            <div class="dropdown-content">
+              <div class="py-1">
+                <a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Most Popular</a>
+                <a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Newest First</a>
+                <a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Oldest First</a>
+                <a href="#" class="block px-4 py-2 text-white hover:bg-gray-800">Highest Rated</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Active Filters -->
+      <div class="mt-4 flex flex-wrap gap-2">
+        <div class="bg-gray-800 rounded-full px-3 py-1 text-sm flex items-center">
+          <span class="mr-2">Phantom GT</span>
+          <button class="w-4 h-4 flex items-center justify-center rounded-full hover:bg-gray-700">
+            <i class="ri-close-line text-xs"></i>
+          </button>
+        </div>
+        <div class="bg-gray-800 rounded-full px-3 py-1 text-sm flex items-center">
+          <span class="mr-2">Cyber Green</span>
+          <button class="w-4 h-4 flex items-center justify-center rounded-full hover:bg-gray-700">
+            <i class="ri-close-line text-xs"></i>
+          </button>
+        </div>
+        <div class="bg-gray-800 rounded-full px-3 py-1 text-sm flex items-center">
+          <span class="mr-2">Pulse</span>
+          <button class="w-4 h-4 flex items-center justify-center rounded-full hover:bg-gray-700">
+            <i class="ri-close-line text-xs"></i>
+          </button>
+        </div>
+        <button class="text-primary text-sm hover:text-white transition-colors">
+          Clear All
+        </button>
+      </div>
+    </div>
+    <!-- Gallery Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Gallery Card 1 -->
+      <div
+        class="gallery-card bg-black bg-opacity-50 rounded-lg border border-gray-800 overflow-hidden hover:neon-border transition-all duration-300">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520vibrant%2520neon%2520green%2520underglow%2520lighting%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car&width=600&height=400&seq=g1&orientation=landscape"
+            alt="Phantom GT - Cyber Pulse" class="w-full h-full object-cover object-top" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end">
+            <div class="card-actions p-4 w-full transform">
+              <div class="flex space-x-2 mb-3">
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-eye-line text-primary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-heart-line text-primary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-share-line text-primary"></i>
+                </button>
+              </div>
+              <button
+                class="w-full bg-primary text-black py-2 rounded-button font-medium orbitron text-sm !rounded-button whitespace-nowrap">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="orbitron font-medium text-lg">
+              Phantom GT - Cyber Pulse
+            </h3>
+            <div class="neon-indicator w-4 h-4 rounded-full" style="background: #00ffaa; box-shadow: 0 0 5px #00ffaa;">
+            </div>
+          </div>
+          <div class="flex items-center text-sm text-gray-400 mb-3">
+            <i class="ri-user-line mr-1"></i>
+            <span>By Alexander Thompson</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="flex text-primary mr-3">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-half-fill"></i>
+              </div>
+              <span class="text-sm text-gray-400">(128)</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-400">
+              <i class="ri-heart-line mr-1"></i>
+              <span>428</span>
+              <i class="ri-eye-line ml-3 mr-1"></i>
+              <span>1.2k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gallery Card 2 -->
+      <div
+        class="gallery-card bg-black bg-opacity-50 rounded-lg border border-gray-800 overflow-hidden hover:neon-border-pink transition-all duration-300">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520vibrant%2520magenta%2520pink%2520neon%2520underglow%2520lighting%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car&width=600&height=400&seq=g2&orientation=landscape"
+            alt="Velocity X-9 - Magenta Flux" class="w-full h-full object-cover object-top" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end">
+            <div class="card-actions p-4 w-full transform">
+              <div class="flex space-x-2 mb-3">
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-eye-line text-secondary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-heart-line text-secondary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-share-line text-secondary"></i>
+                </button>
+              </div>
+              <button
+                class="w-full bg-secondary text-black py-2 rounded-button font-medium orbitron text-sm !rounded-button whitespace-nowrap">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="orbitron font-medium text-lg">
+              Velocity X-9 - Magenta Flux
+            </h3>
+            <div class="neon-indicator w-4 h-4 rounded-full" style="background: #ff00ff; box-shadow: 0 0 5px #ff00ff;">
+            </div>
+          </div>
+          <div class="flex items-center text-sm text-gray-400 mb-3">
+            <i class="ri-user-line mr-1"></i>
+            <span>By Sophia Williams</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="flex text-primary mr-3">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-line"></i>
+              </div>
+              <span class="text-sm text-gray-400">(94)</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-400">
+              <i class="ri-heart-line mr-1"></i>
+              <span>356</span>
+              <i class="ri-eye-line ml-3 mr-1"></i>
+              <span>982</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gallery Card 3 -->
+      <div
+        class="gallery-card bg-black bg-opacity-50 rounded-lg border border-gray-800 overflow-hidden hover:neon-border transition-all duration-300">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520vibrant%2520cyan%2520blue%2520neon%2520underglow%2520lighting%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car&width=600&height=400&seq=g3&orientation=landscape"
+            alt="Stealth Racer - Azure Storm" class="w-full h-full object-cover object-top" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end">
+            <div class="card-actions p-4 w-full transform">
+              <div class="flex space-x-2 mb-3">
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-eye-line text-primary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-heart-line text-primary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-share-line text-primary"></i>
+                </button>
+              </div>
+              <button
+                class="w-full bg-primary text-black py-2 rounded-button font-medium orbitron text-sm !rounded-button whitespace-nowrap">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="orbitron font-medium text-lg">
+              Stealth Racer - Azure Storm
+            </h3>
+            <div class="neon-indicator w-4 h-4 rounded-full" style="background: #00ffff; box-shadow: 0 0 5px #00ffff;">
+            </div>
+          </div>
+          <div class="flex items-center text-sm text-gray-400 mb-3">
+            <i class="ri-user-line mr-1"></i>
+            <span>By James Rodriguez</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="flex text-primary mr-3">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+              </div>
+              <span class="text-sm text-gray-400">(156)</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-400">
+              <i class="ri-heart-line mr-1"></i>
+              <span>512</span>
+              <i class="ri-eye-line ml-3 mr-1"></i>
+              <span>1.4k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gallery Card 4 -->
+      <div
+        class="gallery-card bg-black bg-opacity-50 rounded-lg border border-gray-800 overflow-hidden hover:neon-border-pink transition-all duration-300">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520vibrant%2520yellow%2520neon%2520underglow%2520lighting%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car&width=600&height=400&seq=g4&orientation=landscape"
+            alt="Quantum RS - Electric Surge" class="w-full h-full object-cover object-top" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end">
+            <div class="card-actions p-4 w-full transform">
+              <div class="flex space-x-2 mb-3">
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-eye-line text-secondary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-heart-line text-secondary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-share-line text-secondary"></i>
+                </button>
+              </div>
+              <button
+                class="w-full bg-secondary text-black py-2 rounded-button font-medium orbitron text-sm !rounded-button whitespace-nowrap">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="orbitron font-medium text-lg">
+              Quantum RS - Electric Surge
+            </h3>
+            <div class="neon-indicator w-4 h-4 rounded-full" style="background: #ffff00; box-shadow: 0 0 5px #ffff00;">
+            </div>
+          </div>
+          <div class="flex items-center text-sm text-gray-400 mb-3">
+            <i class="ri-user-line mr-1"></i>
+            <span>By Emma Thompson</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="flex text-primary mr-3">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-half-fill"></i>
+                <i class="ri-star-line"></i>
+              </div>
+              <span class="text-sm text-gray-400">(87)</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-400">
+              <i class="ri-heart-line mr-1"></i>
+              <span>298</span>
+              <i class="ri-eye-line ml-3 mr-1"></i>
+              <span>876</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gallery Card 5 -->
+      <div
+        class="gallery-card bg-black bg-opacity-50 rounded-lg border border-gray-800 overflow-hidden hover:neon-border transition-all duration-300">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520vibrant%2520orange%2520red%2520neon%2520underglow%2520lighting%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car&width=600&height=400&seq=g5&orientation=landscape"
+            alt="Eclipse Vortex - Lava Flow" class="w-full h-full object-cover object-top" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end">
+            <div class="card-actions p-4 w-full transform">
+              <div class="flex space-x-2 mb-3">
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-eye-line text-primary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-heart-line text-primary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-share-line text-primary"></i>
+                </button>
+              </div>
+              <button
+                class="w-full bg-primary text-black py-2 rounded-button font-medium orbitron text-sm !rounded-button whitespace-nowrap">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="orbitron font-medium text-lg">
+              Eclipse Vortex - Lava Flow
+            </h3>
+            <div class="neon-indicator w-4 h-4 rounded-full" style="background: #ff3300; box-shadow: 0 0 5px #ff3300;">
+            </div>
+          </div>
+          <div class="flex items-center text-sm text-gray-400 mb-3">
+            <i class="ri-user-line mr-1"></i>
+            <span>By Daniel Mitchell</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="flex text-primary mr-3">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-line"></i>
+              </div>
+              <span class="text-sm text-gray-400">(112)</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-400">
+              <i class="ri-heart-line mr-1"></i>
+              <span>387</span>
+              <i class="ri-eye-line ml-3 mr-1"></i>
+              <span>1.1k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gallery Card 6 -->
+      <div
+        class="gallery-card bg-black bg-opacity-50 rounded-lg border border-gray-800 overflow-hidden hover:neon-border-pink transition-all duration-300">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520multi-color%2520neon%2520underglow%2520lighting%2520transitioning%2520between%2520green%2520and%2520blue%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car&width=600&height=400&seq=g6&orientation=landscape"
+            alt="Horizon GT-R - Spectrum Wave" class="w-full h-full object-cover object-top" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end">
+            <div class="card-actions p-4 w-full transform">
+              <div class="flex space-x-2 mb-3">
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-eye-line text-secondary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-heart-line text-secondary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-share-line text-secondary"></i>
+                </button>
+              </div>
+              <button
+                class="w-full bg-secondary text-black py-2 rounded-button font-medium orbitron text-sm !rounded-button whitespace-nowrap">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="orbitron font-medium text-lg">
+              Horizon GT-R - Spectrum Wave
+            </h3>
+            <div class="neon-indicator w-4 h-4 rounded-full"
+              style="background: linear-gradient(to right, #00ffaa, #00ffff); box-shadow: 0 0 5px #00ffaa;"></div>
+          </div>
+          <div class="flex items-center text-sm text-gray-400 mb-3">
+            <i class="ri-user-line mr-1"></i>
+            <span>By Olivia Richardson</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="flex text-primary mr-3">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+              </div>
+              <span class="text-sm text-gray-400">(203)</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-400">
+              <i class="ri-heart-line mr-1"></i>
+              <span>624</span>
+              <i class="ri-eye-line ml-3 mr-1"></i>
+              <span>1.8k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gallery Card 7 -->
+      <div
+        class="gallery-card bg-black bg-opacity-50 rounded-lg border border-gray-800 overflow-hidden hover:neon-border transition-all duration-300">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520vibrant%2520green%2520neon%2520underglow%2520lighting%2520in%2520pulse%2520pattern%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car&width=600&height=400&seq=g7&orientation=landscape"
+            alt="Phantom GT - Emerald Pulse" class="w-full h-full object-cover object-top" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end">
+            <div class="card-actions p-4 w-full transform">
+              <div class="flex space-x-2 mb-3">
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-eye-line text-primary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-heart-line text-primary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-primary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-share-line text-primary"></i>
+                </button>
+              </div>
+              <button
+                class="w-full bg-primary text-black py-2 rounded-button font-medium orbitron text-sm !rounded-button whitespace-nowrap">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="orbitron font-medium text-lg">
+              Phantom GT - Emerald Pulse
+            </h3>
+            <div class="neon-indicator w-4 h-4 rounded-full" style="background: #00ffaa; box-shadow: 0 0 5px #00ffaa;">
+            </div>
+          </div>
+          <div class="flex items-center text-sm text-gray-400 mb-3">
+            <i class="ri-user-line mr-1"></i>
+            <span>By Nathan Walker</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="flex text-primary mr-3">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-half-fill"></i>
+              </div>
+              <span class="text-sm text-gray-400">(142)</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-400">
+              <i class="ri-heart-line mr-1"></i>
+              <span>476</span>
+              <i class="ri-eye-line ml-3 mr-1"></i>
+              <span>1.3k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Gallery Card 8 -->
+      <div
+        class="gallery-card bg-black bg-opacity-50 rounded-lg border border-gray-800 overflow-hidden hover:neon-border-pink transition-all duration-300">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520vibrant%2520pink%2520neon%2520underglow%2520lighting%2520in%2520wave%2520pattern%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car&width=600&height=400&seq=g8&orientation=landscape"
+            alt="Velocity X-9 - Neon Wave" class="w-full h-full object-cover object-top" />
+          <div class="card-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent flex items-end">
+            <div class="card-actions p-4 w-full transform">
+              <div class="flex space-x-2 mb-3">
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-eye-line text-secondary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-heart-line text-secondary"></i>
+                </button>
+                <button
+                  class="w-8 h-8 flex items-center justify-center bg-secondary bg-opacity-20 rounded-full hover:bg-opacity-40 transition-colors">
+                  <i class="ri-share-line text-secondary"></i>
+                </button>
+              </div>
+              <button
+                class="w-full bg-secondary text-black py-2 rounded-button font-medium orbitron text-sm !rounded-button whitespace-nowrap">
+                View Details
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="orbitron font-medium text-lg">
+              Velocity X-9 - Neon Wave
+            </h3>
+            <div class="neon-indicator w-4 h-4 rounded-full" style="background: #ff00ff; box-shadow: 0 0 5px #ff00ff;">
+            </div>
+          </div>
+          <div class="flex items-center text-sm text-gray-400 mb-3">
+            <i class="ri-user-line mr-1"></i>
+            <span>By Rebecca Johnson</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center">
+              <div class="flex text-primary mr-3">
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-fill"></i>
+                <i class="ri-star-line"></i>
+              </div>
+              <span class="text-sm text-gray-400">(98)</span>
+            </div>
+            <div class="flex items-center text-sm text-gray-400">
+              <i class="ri-heart-line mr-1"></i>
+              <span>342</span>
+              <i class="ri-eye-line ml-3 mr-1"></i>
+              <span>964</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <div class="mt-12 flex justify-center">
+      <div class="flex space-x-2">
+        <button
+          class="w-10 h-10 flex items-center justify-center bg-gray-900 border border-gray-700 rounded hover:border-primary transition-colors">
+          <i class="ri-arrow-left-s-line"></i>
+        </button>
+        <button class="w-10 h-10 flex items-center justify-center bg-primary text-black rounded font-medium">
+          1
+        </button>
+        <button
+          class="w-10 h-10 flex items-center justify-center bg-gray-900 border border-gray-700 rounded hover:border-primary transition-colors">
+          2
+        </button>
+        <button
+          class="w-10 h-10 flex items-center justify-center bg-gray-900 border border-gray-700 rounded hover:border-primary transition-colors">
+          3
+        </button>
+        <button
+          class="w-10 h-10 flex items-center justify-center bg-gray-900 border border-gray-700 rounded hover:border-primary transition-colors">
+          4
+        </button>
+        <button
+          class="w-10 h-10 flex items-center justify-center bg-gray-900 border border-gray-700 rounded hover:border-primary transition-colors">
+          5
+        </button>
+        <button
+          class="w-10 h-10 flex items-center justify-center bg-gray-900 border border-gray-700 rounded hover:border-primary transition-colors">
+          <i class="ri-arrow-right-s-line"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Featured Designers Section -->
+    <section class="mt-16">
+      <h2 class="orbitron text-2xl font-bold text-white mb-6">
+        Featured Designers
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div
+          class="bg-black bg-opacity-50 rounded-lg border border-gray-800 p-6 hover:neon-border transition-all duration-300">
+          <div class="flex items-center mb-4">
+            <div class="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center mr-4 overflow-hidden">
+              <img
+                src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520male%2520car%2520designer%2520with%2520short%2520dark%2520hair%2520and%2520glasses%252C%2520serious%2520expression%252C%2520studio%2520lighting%252C%2520dark%2520background%252C%2520high-quality%2520portrait&width=100&height=100&seq=d1&orientation=squarish"
+                alt="Alexander Thompson" class="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h3 class="orbitron font-medium text-lg">Alexander Thompson</h3>
+              <p class="text-primary text-sm">Master Designer</p>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mb-4">
+            Specializing in futuristic neon designs with a focus on
+            performance vehicles. Creator of the popular "Cyber Pulse" series.
+          </p>
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-1">
+              <span class="text-gray-400 text-sm">42 Designs</span>
+              <span class="text-gray-600">•</span>
+              <span class="text-gray-400 text-sm">1.2k Followers</span>
+            </div>
+            <button class="text-primary text-sm hover:text-white transition-colors">
+              Follow
+            </button>
+          </div>
+        </div>
+        <div
+          class="bg-black bg-opacity-50 rounded-lg border border-gray-800 p-6 hover:neon-border-pink transition-all duration-300">
+          <div class="flex items-center mb-4">
+            <div class="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center mr-4 overflow-hidden">
+              <img
+                src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520female%2520car%2520designer%2520with%2520medium%2520length%2520hair%252C%2520confident%2520expression%252C%2520studio%2520lighting%252C%2520dark%2520background%252C%2520high-quality%2520portrait&width=100&height=100&seq=d2&orientation=squarish"
+                alt="Sophia Williams" class="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h3 class="orbitron font-medium text-lg">Sophia Williams</h3>
+              <p class="text-secondary text-sm">Creative Director</p>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mb-4">
+            Known for bold color combinations and sound-reactive lighting
+            patterns. Her "Magenta Flux" design won Design of the Year 2024.
+          </p>
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-1">
+              <span class="text-gray-400 text-sm">38 Designs</span>
+              <span class="text-gray-600">•</span>
+              <span class="text-gray-400 text-sm">986 Followers</span>
+            </div>
+            <button class="text-secondary text-sm hover:text-white transition-colors">
+              Follow
+            </button>
+          </div>
+        </div>
+        <div
+          class="bg-black bg-opacity-50 rounded-lg border border-gray-800 p-6 hover:neon-border transition-all duration-300">
+          <div class="flex items-center mb-4">
+            <div class="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center mr-4 overflow-hidden">
+              <img
+                src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520male%2520car%2520designer%2520with%2520beard%252C%2520confident%2520expression%252C%2520studio%2520lighting%252C%2520dark%2520background%252C%2520high-quality%2520portrait&width=100&height=100&seq=d3&orientation=squarish"
+                alt="James Rodriguez" class="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h3 class="orbitron font-medium text-lg">James Rodriguez</h3>
+              <p class="text-primary text-sm">Technical Expert</p>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mb-4">
+            Pioneering advanced lighting control systems with seamless
+            integration. Specializes in high-performance sports cars.
+          </p>
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-1">
+              <span class="text-gray-400 text-sm">29 Designs</span>
+              <span class="text-gray-600">•</span>
+              <span class="text-gray-400 text-sm">754 Followers</span>
+            </div>
+            <button class="text-primary text-sm hover:text-white transition-colors">
+              Follow
+            </button>
+          </div>
+        </div>
+        <div
+          class="bg-black bg-opacity-50 rounded-lg border border-gray-800 p-6 hover:neon-border-pink transition-all duration-300">
+          <div class="flex items-center mb-4">
+            <div class="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center mr-4 overflow-hidden">
+              <img
+                src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520female%2520car%2520designer%2520with%2520short%2520hair%252C%2520artistic%2520style%252C%2520confident%2520expression%252C%2520studio%2520lighting%252C%2520dark%2520background%252C%2520high-quality%2520portrait&width=100&height=100&seq=d4&orientation=squarish"
+                alt="Emma Thompson" class="w-full h-full object-cover" />
+            </div>
+            <div>
+              <h3 class="orbitron font-medium text-lg">Emma Thompson</h3>
+              <p class="text-secondary text-sm">Innovation Lead</p>
+            </div>
+          </div>
+          <p class="text-gray-400 text-sm mb-4">
+            Pushing boundaries with multi-color dynamic patterns. Her
+            "Spectrum Wave" design features revolutionary adaptive lighting
+            technology.
+          </p>
+          <div class="flex justify-between items-center">
+            <div class="flex space-x-1">
+              <span class="text-gray-400 text-sm">34 Designs</span>
+              <span class="text-gray-600">•</span>
+              <span class="text-gray-400 text-sm">892 Followers</span>
+            </div>
+            <button class="text-secondary text-sm hover:text-white transition-colors">
+              Follow
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- CTA Section -->
+    <section class="mt-16 relative rounded-lg overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20"></div>
+      <div class="relative z-10 py-12 px-6 md:px-12 flex flex-col items-center text-center">
+        <h2 class="orbitron text-3xl md:text-4xl font-bold mb-4">
+          Create Your Own Neon Masterpiece
+        </h2>
+        <p class="text-lg max-w-2xl mb-8">
+          Ready to design your own custom neon underglow? Use our interactive
+          customization tool to create a unique look for your ride.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button
+            class="neon-button bg-primary text-black px-8 py-3 rounded-button orbitron font-medium text-lg hover:bg-opacity-90 transition-colors !rounded-button whitespace-nowrap">
+            Start Designing
+          </button>
+          <button
+            class="neon-button neon-button-pink bg-black bg-opacity-70 border border-secondary text-secondary px-8 py-3 rounded-button orbitron font-medium text-lg hover:bg-secondary hover:text-black transition-colors !rounded-button whitespace-nowrap">
+            View Tutorials
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer class="bg-black bg-opacity-90 border-t border-gray-800 mt-16">
+    <div class="container mx-auto px-4 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <a href="#" class="font-['Pacifico'] text-2xl text-primary neon-text inline-block mb-4">logo</a>
+          <p class="text-gray-400 mb-4">
+            Premium neon underglow solutions for automotive enthusiasts.
+            Transform your ride with our cutting-edge 3D customization
+            platform.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700">
+              <i class="ri-facebook-fill text-primary"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700">
+              <i class="ri-instagram-fill text-primary"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700">
+              <i class="ri-twitter-x-fill text-primary"></i>
+            </a>
+            <a href="#" class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-800 hover:bg-gray-700">
+              <i class="ri-youtube-fill text-primary"></i>
+            </a>
+          </div>
+        </div>
+        <div>
+          <h3 class="orbitron text-lg font-medium text-white mb-4">
+            Quick Links
+          </h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">Home</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">Shop</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">Gallery</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">About Us</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">Contact</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="orbitron text-lg font-medium text-white mb-4">
+            Support
+          </h3>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">FAQ</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">Installation Guides</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">Warranty Information</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">Shipping & Returns</a>
+            </li>
+            <li>
+              <a href="#" class="text-gray-400 hover:text-primary transition-colors">Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="orbitron text-lg font-medium text-white mb-4">
+            Subscribe
+          </h3>
+          <p class="text-gray-400 mb-4">
+            Get the latest news and exclusive offers.
+          </p>
+          <div class="flex">
+            <input type="email" placeholder="Your email"
+              class="bg-gray-900 border border-gray-700 rounded-l text-white px-3 py-2 focus:outline-none focus:border-primary w-full" />
+            <button
+              class="bg-primary text-black px-4 py-2 rounded-r font-medium hover:bg-opacity-90 transition-colors whitespace-nowrap">
+              Subscribe
+            </button>
+          </div>
+          <div class="mt-6">
+            <h4 class="text-white mb-2">We Accept</h4>
+            <div class="flex space-x-3">
+              <i class="ri-visa-fill text-2xl text-gray-400"></i>
+              <i class="ri-mastercard-fill text-2xl text-gray-400"></i>
+              <i class="ri-paypal-fill text-2xl text-gray-400"></i>
+              <i class="ri-apple-fill text-2xl text-gray-400"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-500 text-sm">
+          © 2025 NeonDrive. All rights reserved.
+        </p>
+        <div class="flex space-x-4 mt-4 md:mt-0">
+          <a href="#" class="text-gray-500 text-sm hover:text-gray-400">Terms of Service</a>
+          <a href="#" class="text-gray-500 text-sm hover:text-gray-400">Privacy Policy</a>
+          <a href="#" class="text-gray-500 text-sm hover:text-gray-400">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- Quick View Modal (Hidden by default) -->
+  <div id="quickViewModal" class="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center hidden">
+    <div class="bg-gray-900 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-auto">
+      <div class="relative">
+        <div class="h-80 overflow-hidden">
+          <img
+            src="https://readdy.ai/api/search-image?query=Sleek%2520black%2520sports%2520car%2520with%2520vibrant%2520neon%2520green%2520underglow%2520lighting%2520against%2520dark%2520urban%2520background%2520at%2520night%252C%2520professional%2520automotive%2520photography%252C%2520dramatic%2520lighting%252C%2520high-end%2520finish%252C%2520ultra-realistic%252C%2520glossy%2520black%2520car%2520from%2520multiple%2520angles&width=800&height=500&seq=modal&orientation=landscape"
+            alt="Car Design Detail" class="w-full h-full object-cover object-top" />
+        </div>
+        <button
+          class="absolute top-4 right-4 w-10 h-10 rounded-full bg-black bg-opacity-50 flex items-center justify-center hover:bg-opacity-70 transition-colors"
+          id="closeModal">
+          <i class="ri-close-line text-white text-xl"></i>
+        </button>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h2 class="orbitron text-2xl font-bold text-white">
+              Phantom GT - Cyber Pulse
+            </h2>
+            <div class="flex items-center text-sm text-gray-400">
+              <span>By Alexander Thompson</span>
+              <span class="mx-2">•</span>
+              <span>Created May 2, 2025</span>
+            </div>
+          </div>
+          <div class="flex space-x-2">
+            <button
+              class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-colors">
+              <i class="ri-heart-line text-primary"></i>
+            </button>
+            <button
+              class="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-full hover:bg-gray-700 transition-colors">
+              <i class="ri-share-line text-primary"></i>
+            </button>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div>
+            <h3 class="orbitron text-lg font-medium text-primary mb-3">
+              Design Details
+            </h3>
+            <p class="text-gray-300 mb-4">
+              The Cyber Pulse design features a dynamic green underglow system
+              that reacts to both music and vehicle acceleration. The
+              proprietary pulse pattern creates a ripple effect that flows
+              from front to back.
+            </p>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-400">Car Model</span>
+                <span class="text-white">Phantom GT 2025</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Primary Color</span>
+                <div class="flex items-center">
+                  <div class="w-4 h-4 rounded-full mr-2" style="background: #00ffaa; box-shadow: 0 0 5px #00ffaa;">
+                  </div>
+                  <span class="text-white">Cyber Green</span>
+                </div>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Pattern</span>
+                <span class="text-white">Pulse</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Sound Reactive</span>
+                <span class="text-white">Yes</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-400">Installation Difficulty</span>
+                <div class="flex text-primary">
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-fill"></i>
+                  <i class="ri-star-line"></i>
+                  <i class="ri-star-line"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="orbitron text-lg font-medium text-primary mb-3">
+              Components
+            </h3>
+            <ul class="space-y-2">
+              <li class="flex justify-between">
+                <span class="text-gray-300">NeonDrive Controller Pro</span>
+                <span class="text-primary">$249.99</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="text-gray-300">Ultra Bright LED Strips (4x)</span>
+                <span class="text-primary">$179.99</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="text-gray-300">Sound Sensor Module</span>
+                <span class="text-primary">$49.99</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="text-gray-300">Wireless Remote</span>
+                <span class="text-primary">$29.99</span>
+              </li>
+              <li class="flex justify-between">
+                <span class="text-gray-300">Installation Kit</span>
+                <span class="text-primary">$39.99</span>
+              </li>
+              <li class="flex justify-between font-medium mt-4">
+                <span class="text-white">Total Package</span>
+                <span class="text-primary">$549.95</span>
+              </li>
+            </ul>
+            <div class="mt-6">
+              <button
+                class="w-full bg-primary text-black py-3 rounded-button font-medium orbitron hover:bg-opacity-90 transition-colors !rounded-button whitespace-nowrap">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-6">
+          <h3 class="orbitron text-lg font-medium text-white mb-3">
+            Reviews & Comments
+          </h3>
+          <div class="space-y-4">
+            <div class="flex">
+              <div class="w-10 h-10 rounded-full bg-gray-700 flex-shrink-0 mr-3">
+                <img
+                  src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520young%2520man%252C%2520casual%2520style%252C%2520confident%2520expression%252C%2520studio%2520lighting%252C%2520high-quality%2520portrait&width=50&height=50&seq=r1&orientation=squarish"
+                  alt="Ryan Jackson" class="w-full h-full object-cover rounded-full" />
+              </div>
+              <div>
+                <div class="flex items-center">
+                  <h4 class="font-medium">Ryan Jackson</h4>
+                  <div class="flex text-primary text-sm ml-2">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                  </div>
+                </div>
+                <p class="text-gray-300 text-sm mt-1">
+                  Installed this on my Phantom GT last week and it's
+                  absolutely stunning. The sound reactive feature works
+                  perfectly with my sound system. Highly recommend!
+                </p>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="w-10 h-10 rounded-full bg-gray-700 flex-shrink-0 mr-3">
+                <img
+                  src="https://readdy.ai/api/search-image?query=Professional%2520headshot%2520of%2520a%2520young%2520woman%252C%2520casual%2520style%252C%2520confident%2520expression%252C%2520studio%2520lighting%252C%2520high-quality%2520portrait&width=50&height=50&seq=r2&orientation=squarish"
+                  alt="Jessica Liu" class="w-full h-full object-cover rounded-full" />
+              </div>
+              <div>
+                <div class="flex items-center">
+                  <h4 class="font-medium">Jessica Liu</h4>
+                  <div class="flex text-primary text-sm ml-2">
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-fill"></i>
+                    <i class="ri-star-line"></i>
+                  </div>
+                </div>
+                <p class="text-gray-300 text-sm mt-1">
+                  The green is even more vibrant in person. Installation was a
+                  bit tricky around the wheel wells, but the end result is
+                  worth it. Gets tons of attention at night.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <textarea placeholder="Add your comment..."
+              class="w-full bg-gray-800 border border-gray-700 rounded p-3 text-white focus:outline-none focus:border-primary"></textarea>
+            <div class="flex justify-end mt-2">
+              <button
+                class="bg-gray-800 border border-primary text-primary px-4 py-2 rounded-button hover:bg-primary hover:text-black transition-colors !rounded-button whitespace-nowrap">
+                Post Comment
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Color swatch selection in filters
+      const colorSwatches = document.querySelectorAll(".color-swatch");
+      colorSwatches.forEach((swatch) => {
+        swatch.addEventListener("click", function () {
+          colorSwatches.forEach((s) => s.classList.remove("active"));
+          this.classList.add("active");
+        });
+      });
+      // Checkbox functionality
+      const customCheckboxes = document.querySelectorAll(".custom-checkbox");
+      customCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", function () {
+          const label = this.nextElementSibling;
+          if (this.checked) {
+            label.classList.add("border-primary");
+          } else {
+            label.classList.remove("border-primary");
+          }
+        });
+      });
+      // Quick view modal functionality
+      const viewButtons = document
+        .querySelectorAll(".gallery-card .ri-eye-line")
+        .forEach((button) => {
+          button.closest("button").addEventListener("click", function () {
+            document.getElementById("quickViewModal").classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+          });
+        });
+      // View details buttons
+      document
+        .querySelectorAll(".gallery-card button:last-child")
+        .forEach((button) => {
+          button.addEventListener("click", function () {
+            document.getElementById("quickViewModal").classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+          });
+        });
+      // Close modal
+      document.getElementById("closeModal").addEventListener("click", function () {
+        document.getElementById("quickViewModal").classList.add("hidden");
+        document.body.style.overflow = "auto";
+      });
+      // Close modal when clicking outside
+      document
+        .getElementById("quickViewModal")
+        .addEventListener("click", function (e) {
+          if (e.target === this) {
+            this.classList.add("hidden");
+            document.body.style.overflow = "auto";
+          }
+        });
+      // Favorite functionality
+      const heartButtons = document
+        .querySelectorAll(".ri-heart-line")
+        .forEach((icon) => {
+          icon.closest("button").addEventListener("click", function () {
+            const heartIcon = this.querySelector(".ri-heart-line");
+            if (heartIcon.classList.contains("ri-heart-line")) {
+              heartIcon.classList.remove("ri-heart-line");
+              heartIcon.classList.add("ri-heart-fill");
+            } else {
+              heartIcon.classList.remove("ri-heart-fill");
+              heartIcon.classList.add("ri-heart-line");
+            }
+          });
+        });
+      // Filter tag removal
+      const filterTags = document.querySelectorAll(
+        ".bg-gray-800.rounded-full button",
+      );
+      filterTags.forEach((button) => {
+        button.addEventListener("click", function () {
+          this.closest(".bg-gray-800.rounded-full").remove();
+        });
+      });
+      // Clear all filters
+      const clearAllButton = document.querySelector("button.text-primary.text-sm");
+      clearAllButton.addEventListener("click", function () {
+        document.querySelectorAll(".bg-gray-800.rounded-full").forEach((tag) => {
+          tag.remove();
+        });
+      });
+    });
+  </script>
+</body>
+
+</html>
